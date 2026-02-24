@@ -69,18 +69,16 @@ public class List {
     /** If the given character exists in one of the CharData objects in this list,
      *  increments its counter. Otherwise, adds a new CharData object with the
      *  given chr to the beginning of this list. */
-    public void update(char chr) {
-        Node Curnode = first;
-        while(Curnode!=null){
-             if(Curnode.cp.chr == chr){
-                Curnode.cp.count++;
-                return;
-             }
-             CharData ch = new CharData(chr);
-             addFirst(chr);
-             return;
-        }
+   public void update(char chr) {
+    int index = indexOf(chr); 
+
+    if (index != -1) {
+        CharData data = get(index);
+        data.count++;
+    } else {
+        addFirst(chr);
     }
+}
 
     /** GIVE If the given character exists in one of the CharData objects
      *  in this list, removes this CharData object from the list and returns
@@ -108,7 +106,7 @@ public class List {
      *  If the index is negative or is greater than the size of this list, 
      *  throws an IndexOutOfBoundsException. */
     public CharData get(int index) {
-        if(index>size || index<0){
+        if(index >= size || index < 0){
             throw new IndexOutOfBoundsException();
         }
         Node Curnode = first;
@@ -134,17 +132,13 @@ public class List {
     }
 
     /** Returns an iterator over the elements in this list, starting at the given index. */
-    public ListIterator listIterator(int index) {
-	    // If the list is empty, there is nothing to iterate   
-	    if (size == 0) return null;
-	    // Gets the element in position index of this list
-	    Node current = first;
-	    int i = 0;
-        while (i < index) {
-            current = current.next;
-            i++;
-        }
-        // Returns an iterator that starts in that element
-	    return new ListIterator(current);
+  public ListIterator listIterator(int index) { 
+    Node current = first;
+    int i = 0;
+    while (i < index) {
+        current = current.next;
+        i++;
     }
+    return new ListIterator(current); 
+}
 }
